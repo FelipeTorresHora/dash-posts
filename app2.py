@@ -204,8 +204,9 @@ if secao_selecionada != 'Todas':
 
 st.sidebar.markdown("---")
 st.sidebar.markdown(f"### 📊 Resumo Filtrado")
-st.sidebar.metric("Total de Empresas", f"{len(df_filtered):,}")
-st.sidebar.metric("Com Instagram", f"{df_filtered['tem_instagram'].sum():,}")
+st.sidebar.metric("Total de Empresas com Instagram Dominio", "45.383 ")
+st.sidebar.metric("Total de Empresas Com Instagram", f"{len(df_filtered):,}")
+st.sidebar.metric("Total de Empresas Com Instagram Posts", f"{df_filtered['tem_instagram'].sum():,}")
 st.sidebar.metric("Taxa de Adoção", f"{df_filtered['tem_instagram'].mean()*100:.1f}%")
 
 if secao_selecionada != 'Todas':
@@ -224,20 +225,20 @@ st.markdown('<p class="main-header">📊 Dashboard para análise da presença di
 # MÉTRICAS PRINCIPAIS
 # ==============================================================================
 
-col1, col2, col3, col4, col5 = st.columns(5)
+col1, col2, col3, col4 = st.columns(spec=(2, 2, 1,2))
 
 df_insta_filtered = df_filtered[df_filtered['tem_instagram'] == 1]
 
 with col1:
     st.metric(
-        "Total de Empresas da Amostra",
+        "Total de Empresas com instagram",
         f"{len(df_filtered):,}",
         delta=f"{len(df_filtered)/len(df)*100:.1f}% do total"
     )
 
 with col2:
     st.metric(
-        "Empresas Com Instagram",
+        "Empresas Com Posts Instagram",
         f"{df_filtered['tem_instagram'].sum():,}",
         delta=f"68.27% do total de empresas"
     )
@@ -251,14 +252,6 @@ with col3:
     )
 
 with col4:
-    mediana_posts = df_insta_filtered['numero_posts'].median() if len(df_insta_filtered) > 0 else 0
-    st.metric(
-        "Mediana de Posts",
-        f"{mediana_posts:,.0f}",
-        delta="273 Posts a menos que a média"
-    )
-
-with col5:
     max_posts = df_insta_filtered['numero_posts'].max() if len(df_insta_filtered) > 0 else 0
     st.metric(
         "Empresa com Mais Posts",
